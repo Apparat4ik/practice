@@ -29,7 +29,7 @@ int64_t ExtendedEuclid(int64_t a, int64_t b){   // расщиренный алг
 }
 
 template<typename T>
-T CorrectInput(T min_value, T max_value = numeric_limits<T>::max()){
+T CorrectInput(T min_value = numeric_limits<T>::min(), T max_value = numeric_limits<T>::max()){
     T value;
     cin >> value;
     if (cin.fail() || value < min_value || value > max_value){
@@ -44,8 +44,8 @@ int main(){
     try {
         cout << "Вычислим такое число d: c*d mod m = 1" << endl;
         cout << "Введите числа c (число для обратного элемента) и m (модуль): " << endl;
-        int64_t c = CorrectInput<int64_t>(1);
-        int64_t m = CorrectInput<int64_t>(1);
+        int64_t c = CorrectInput<int64_t>();
+        int64_t m = CorrectInput<int64_t>();
         
         int64_t d = ExtendedEuclid(c, m);
         cout << "d = " << d << endl;
