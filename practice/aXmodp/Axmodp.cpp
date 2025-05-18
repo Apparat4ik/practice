@@ -4,6 +4,7 @@
 #include <cmath>
 #include <sstream>
 #include <limits>
+#include <cstdint>
 
 
 using namespace std;
@@ -33,9 +34,7 @@ int64_t Mod_pow(int64_t a, int64_t x, const int64_t& p){   // ф-ция, кот�
 }
 
 
-int64_t AxmodpLog(int64_t a, int64_t x, int64_t p){
-    
-    
+int64_t AxmodpLog(int64_t a, int64_t x, const int64_t& p){
     if (x == 1){return a % p;}
     if (x == 0){return 1;}
     
@@ -48,7 +47,7 @@ int64_t AxmodpLog(int64_t a, int64_t x, int64_t p){
     
     vector<int8_t> binx = Dec_to_Bin(x);
     int64_t result = 1;
-    for (int i = 0; i < max_pow_of2; i++){
+    for (int i = 0; i < binx.size(); i++){
         if (binx[i] == 1){
             result = (result * max_pow_of2) % p;
         }
@@ -59,7 +58,7 @@ int64_t AxmodpLog(int64_t a, int64_t x, int64_t p){
 
 
 
-int64_t Axmodp(int64_t a, int64_t x, int64_t p){
+int64_t Axmodp(int64_t a, int64_t x, const int64_t& p){
     int64_t degree;
     if (x == 0){
         return a % p;
@@ -114,13 +113,12 @@ bool Primary(const int64_t& p, const int16_t& k){
 }
 
 template<typename T>
-T CorrectInput(){
+T CorrectInput(T min_value, T max_value = numeric_limits<T>::max()){
     T value;
-    T max_value = numeric_limits<T>::max();
     cin >> value;
-    if (cin.fail() || value < 0 || value > max_value){
+    if (cin.fail() || value < min_value || value > max_value){
         stringstream serr;
-        serr << "Некорректный ввод. Вы должны ввести число в диапазоне <0, " << max_value << ">";
+        serr << "Некорректный ввод. Вы должны ввести число в диапазоне <" << min_value << ", " << max_value << ">";
         throw invalid_argument(serr.str());
     }
     return value;
@@ -130,21 +128,21 @@ T CorrectInput(){
 int main(){
     try {
         cout << "Введите певрое число и его степнь через пробел: " << '\t';
-        int64_t a1 = CorrectInput<int64_t>();
-        int64_t x1 = CorrectInput<int64_t>();
+        int64_t a1 = CorrectInput<int64_t>(0);
+        int64_t x1 = CorrectInput<int64_t>(0);
         
         
         cout << "Введите второе число и его степнь через пробел: " << '\t';
-        int64_t a2 = CorrectInput<int64_t>();
-        int64_t x2 = CorrectInput<int64_t>();
+        int64_t a2 = CorrectInput<int64_t>(0);
+        int64_t x2 = CorrectInput<int64_t>(0);
         
         
         cout << "Введите число, по модулю которого числа будут сравниваться: " << '\t';
-        int64_t p = CorrectInput<int64_t>();
+        int64_t p = CorrectInput<int64_t>(1);
         
 
         cout << "Введите число проверок по теореме Ферма (не больше 200): " << '\t';
-        int16_t k = CorrectInput<int16_t>();
+        int16_t k = CorrectInput<int16_t>(1, 200);
         
         
 
