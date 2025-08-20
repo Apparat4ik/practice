@@ -23,9 +23,9 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		86447F5F2DBA748A00E6BB2A /* practice */ = {
+		86447F5F2DBA748A00E6BB2A /* Euclid */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = practice;
+			path = Euclid;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -44,7 +44,7 @@
 		86447F542DBA748A00E6BB2A = {
 			isa = PBXGroup;
 			children = (
-				86447F5F2DBA748A00E6BB2A /* practice */,
+				86447F5F2DBA748A00E6BB2A /* Euclid */,
 				86447F5E2DBA748A00E6BB2A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -73,7 +73,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				86447F5F2DBA748A00E6BB2A /* practice */,
+				86447F5F2DBA748A00E6BB2A /* Euclid */,
 			);
 			name = practice;
 			packageProductDependencies = (
