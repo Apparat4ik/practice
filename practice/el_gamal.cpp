@@ -7,7 +7,8 @@
 #include <map>
 #include <sstream>
 #include <iomanip>
-#include <uchar.h>
+#include <chrono>
+
 
 using namespace std;
 
@@ -246,22 +247,54 @@ void Decryption(string& plain_text){
 }
 
 
+void DemonstrateAttack() {
+    cout << "\n=== АТАКА НА ЗАКРЫТЫЙ КЛЮЧ ===" << endl;
+    
+    uint64_t p = Public_Key['p'];
+    uint64_t g = Public_Key['g'];
+    uint64_t y = Public_Key['y'];
+    
+    // Решаем y = g^x mod p
+    cout << "Решаем задачу дискретного логарифмирования..." << endl;
+    uint64_t found_x = 0;
+    
+    
+    clock_t t_start = clock();
+    for (uint64_t x_candidate = 1; x_candidate < p; x_candidate++) {
+        if (Mod_pow(g, x_candidate, p) == y) {
+            found_x = x_candidate;
+            break;
+        }
+    }
+    clock_t t_end = clock();
+    double time = (double)(t_end - t_start) / CLOCKS_PER_SEC;
+    cout << "Затраченное время: " << time << " c." << endl;
+    
+    cout << "Найденный x: " << found_x << endl;
+    cout << "Истинный x: " << Private_Key << endl;
+    
+    if (found_x == Private_Key) {
+        cout << "УСПЕХ! Атакующий теперь может расшифровать любые сообщения!" << endl;
+    }
+}
 
 
 int main(){
     Sieve(500);
-    GenKeys(20, 10);
+    GenKeys(30, 10);
     Session_Key = 1 + (gen() % (Public_Key['p'] - 2));
     string plain_text;
-    cout << "Введите текст, который хотите сашифровать" << endl;
+    cout << "Введите текст, который хотите зашифровать" << endl;
     getline(cin, plain_text);
     
     for (uint8_t ltr : plain_text){
         Encryption(ltr);
         plain_text.erase(0);
     }
+    
+    DemonstrateAttack();
    
-    cout << "зашифрованное сообшение: " << endl;
+    cout << "Зашифрованное сообшение: " << endl;
     cout << Cypher_text << endl;
     
     cout << "Расшифрованное сообщение: " << endl;
@@ -269,9 +302,6 @@ int main(){
     Decryption(plain_text);
     cout << plain_text << endl;
 
-    
-    
-    
     
     return 0;
 }
